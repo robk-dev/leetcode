@@ -9,6 +9,40 @@ const longestPalindrome = (s) => {
     let longest = '';
     let i = 0, max = s.length;
 
+    if (max <= 1) return s;
+
+    const fromCenter = (left, right) => {
+        while (left >= 0 && right < max && s[left] === s[right]) {
+            left--;
+            right++;
+        }
+
+        return s.slice(left + 1, right);
+    };
+
+    while (i < max - 1) {
+        const odd = fromCenter(i, i + 1);
+        const even = fromCenter(i, i);
+        i++;
+
+        if (odd.length > longest.length) {
+            longest = odd;
+        }
+
+        if (even.length > longest.length) {
+            longest = even;
+        }
+    }
+    return longest;
+}
+
+const longestPalindromeNaive = (s) => {
+
+    let longest = '';
+    let i = 0, max = s.length;
+
+    if (max <= 1) return s;
+
     const map = {};
     while (i < max) {
         const substrings = s.substr(i, max);
@@ -17,9 +51,11 @@ const longestPalindrome = (s) => {
         let j = substrings.length;
         if (j <= longest.length) break;
 
+        if (map[substrings]) continue;
+        map[substrings] = true;
+
         while (j >= 0) {
             const subsub = substrings.substr(0, j);
-            console.log({ [`subsub[${[i]}][${j}]`]: subsub });
             j--;
             if (map[subsub]) continue;
             map[subsub] = true;
@@ -38,6 +74,4 @@ const longestPalindrome = (s) => {
     return longest;
 }
 
-module.exports = longestPalindrome;
-
-console.log(longestPalindrome("civilwartestingwhetherthatnaptionoranynartionsoconceivedandsodedicatedcanlongendureWeareqmetonagreatbattlefiemldoftzhatwarWehavecometodedicpateaportionofthatfieldasafinalrestingplaceforthosewhoheregavetheirlivesthatthatnationmightliveItisaltogetherfangandproperthatweshoulddothisButinalargersensewecannotdedicatewecannotconsecratewecannothallowthisgroundThebravelmenlivinganddeadwhostruggledherehaveconsecrateditfaraboveourpoorponwertoaddordetractTgheworldadswfilllittlenotlenorlongrememberwhatwesayherebutitcanneverforgetwhattheydidhereItisforusthelivingrathertobededicatedheretotheulnfinishedworkwhichtheywhofoughtherehavethusfarsonoblyadvancedItisratherforustobeherededicatedtothegreattdafskremainingbeforeusthatfromthesehonoreddeadwetakeincreaseddevotiontothatcauseforwhichtheygavethelastpfullmeasureofdevotionthatweherehighlyresolvethatthesedeadshallnothavediedinvainthatthisnationunsderGodshallhaveanewbirthoffreedomandthatgovernmentofthepeoplebythepeopleforthepeopleshallnotperishfromtheearth"));
+module.exports = { longestPalindromeNaive, longestPalindrome };
