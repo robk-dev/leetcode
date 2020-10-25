@@ -1,8 +1,7 @@
-
-function isValid(s) {
+const isValid = (s) => {
     const reversed = s.split("").reverse().join("");
     return s == reversed;
-}
+};
 
 const longestPalindrome = (s) => {
 
@@ -34,7 +33,7 @@ const longestPalindrome = (s) => {
         }
     }
     return longest;
-}
+};
 
 const longestPalindromeNaive = (s) => {
 
@@ -72,6 +71,6 @@ const longestPalindromeNaive = (s) => {
         }
     }
     return longest;
-}
+};
 
 module.exports = { longestPalindromeNaive, longestPalindrome };
